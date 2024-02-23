@@ -1,10 +1,11 @@
+"use client";
 import { Button } from "keep-react";
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import ModalFormGrade from "./ModalFormGrade";
 import { ACTION_FORM } from "@/contants/actionForm";
 
-export default function FormGrade() {
+export default function FormClasses() {
   const [showModal, setShowModal] = useState(false);
 
   const toggleForm = () => {
@@ -22,7 +23,7 @@ export default function FormGrade() {
         showModalX={showModal}
         actionForm={ACTION_FORM.ADD}
         toggleForm={toggleForm}
-        gradeEdit={undefined}
+        classEdit={undefined}
       />
     </>
   );

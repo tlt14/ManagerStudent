@@ -2,23 +2,23 @@
 import { Avatar, Button, Table, Popover } from "keep-react";
 import { Cube, DotsThreeOutline, Trash, Pencil } from "phosphor-react";
 import { useState } from "react";
-import ModalFormGrade from "./ModalFormGrade";
 import { ACTION_FORM } from "@/contants/actionForm";
 import ModalConfirm from "./ModalConfirm";
-import { IGrade } from "@/service/gradeService";
 import axiosClient from "@/lib/axiosClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ModalFormClass from "./ModalFormGrade";
+import { IClass } from "@/service/classesService";
 interface IProps {
-  data: IGrade[] | undefined;
+  data: IClass[] | undefined;
 }
-const deleteGrade = async (id: string) => {
+const deleteClass = async (id: string) => {
   await axiosClient.delete(`/grades/${id}`);
 };
-export default function TableGrades({ data }: IProps) {
+export default function TableClass({ data }: IProps) {
   const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState<boolean>(false);
-  const [gradeEdit, setGradeEdit] = useState<IGrade>();
+  const [classEdit, setClassEdit] = useState<IClass>();
   const onClickErrorModal = () => {
     setShowModalConfirm(!showModalConfirm);
   };
@@ -26,7 +26,7 @@ export default function TableGrades({ data }: IProps) {
     setShowModal(!showModal);
   };
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteGrade(id),
+    mutationFn: (id: string) => deleteClass(id),
     onSuccess: () => {
       // Invalidate and refetch data after a successful delete operation
       queryClient.invalidateQueries({ queryKey: ["grades"] });
@@ -120,7 +120,7 @@ export default function TableGrades({ data }: IProps) {
                           className="flex w-full items-center justify-between text-body-4 font-normal text-metal-600"
                           onClick={() => {
                             onClickTwo();
-                            setGradeEdit(item);
+                            setClassEdit(item);
                           }}
                         >
                           <span>Edit</span>
@@ -146,11 +146,11 @@ export default function TableGrades({ data }: IProps) {
           ))}
         </Table.Body>
       </Table>
-      <ModalFormGrade
+      <ModalFormClass
         actionForm={ACTION_FORM.EDIT}
         showModalX={showModal}
         toggleForm={onClickTwo}
-        gradeEdit={gradeEdit}
+        classEdit={classEdit}
       />
       <ModalConfirm
         onClickErrorModal={onClickErrorModal}

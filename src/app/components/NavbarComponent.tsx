@@ -36,15 +36,12 @@ export const NavbarComponent = () => {
               <Link href="/" className="text-black">
                 Trang chủ
               </Link>
-              <Link href="/academic_year " className="text-black">
-                Năm học
+              <Link href="/grades " className="text-black">
+                Khối lớp
               </Link>
-              {/* <Navbar.Link linkName="Trang chủ" /> */}
-              {/*               
-              <Navbar.Link linkName="Projects" />
-              <Navbar.Link linkName="Blogs" />
-              <Navbar.Link linkName="News" />
-              <Navbar.Link linkName="Resources" /> */}
+              <Link href="/classes " className="text-black">
+                Quản lý lớp học
+              </Link>
             </Navbar.Container>
           </Navbar.Collapse>
         </Navbar.Container>

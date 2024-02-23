@@ -1,28 +1,28 @@
 import { ACTION_FORM } from "@/contants/actionForm";
 import axiosClient from "@/lib/axiosClient";
-import { IGrade } from "@/service/gradeService";
+import { IClass } from "@/service/classesService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Label, Modal } from "keep-react";
 import { useEffect, useState } from "react";
 
-interface IModalFormGradeProps {
+interface IModalFormClassProps {
   showModalX: boolean;
 
   actionForm: ACTION_FORM;
   toggleForm: () => void;
-  gradeEdit: IGrade | undefined;
+  classEdit: IClass | undefined;
 }
-export default function ModalFormGrade({
+export default function ModalFormClass({
   showModalX,
   actionForm,
   toggleForm,
-  gradeEdit,
-}: IModalFormGradeProps) {
+  classEdit,
+}: IModalFormClassProps) {
   const [name, setName] = useState<string>("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (formData: Omit<IGrade, "id">) => {
+    mutationFn: (formData: Omit<IClass, "id">) => {
       return axiosClient.post("/grades", formData);
     },
     onSuccess: () => {
@@ -33,7 +33,7 @@ export default function ModalFormGrade({
     },
   });
   const mutationUpdate = useMutation({
-    mutationFn: (formData: IGrade) => {
+    mutationFn: (formData: IClass) => {
       return axiosClient.put(`/grades/${formData.id}`, formData);
     },
     onSuccess: () => {
@@ -48,15 +48,14 @@ export default function ModalFormGrade({
     if (actionForm === ACTION_FORM.ADD) {
       mutation.mutate({ name });
     } else {
-      mutationUpdate.mutate({ id: gradeEdit?.id as string, name });
+      // mutationUpdate.mutate({ id: gradeEdit?.id as string, name });
     }
   };
   useEffect(() => {
-    if (gradeEdit) {
-      setName(gradeEdit.name);
+    if (classEdit) {
+      setName(classEdit.name);
     }
-  }, [gradeEdit]);
-  console.log({ name });
+  }, [classEdit]);
   return (
     <Modal size="md" show={showModalX} onClose={toggleForm} color="#5E718D">
       <Modal.Header className="text-center">
